@@ -38,11 +38,12 @@ namespace ToolKit
             // 添加了对属性路由的控制器支持
             app.MapControllers();
             app.UseRouting();
+            // 启动页
+            app.MapGet("/", () => "欢迎使用工具箱！！！");
             // 添加跨域
             app.UseCors();
-
             #endregion
-
+            Console.WriteLine("==========工具箱启动！！！==========");
             app.Run();
         }
     }
