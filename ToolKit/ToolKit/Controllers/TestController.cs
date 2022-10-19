@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ToolKit.Configs.AutoFacs;
+using ToolKit.Services.Test;
 
 namespace ToolKit.Controllers
 {
@@ -7,10 +9,13 @@ namespace ToolKit.Controllers
     [ApiController]
     public class TestController : ControllerBase
     {
+        [Autowired]
+        private ITestService Test { get; set; }
+
         [HttpGet]
-        public IActionResult QueryString()
+        public async Task<IActionResult> QueryString()
         {
-            return Ok("这是一个GET");
+            return Ok(await Test.QueryString());
         }
     }
 }
