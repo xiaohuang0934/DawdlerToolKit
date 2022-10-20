@@ -1,4 +1,6 @@
-﻿namespace ToolKit.Services.Test
+﻿using ToolKit.Commons.BaseExceptions;
+
+namespace ToolKit.Services.Test
 {
     public class TestService : ITestService
     {
@@ -8,7 +10,9 @@
             await Task.Run(() =>
               {
                   result = "这是一个异步方法";
+                  //throw new BaseException("异步异常抛出");
               });
+            //throw new BaseException("同步异常抛出");
             return result;
         }
     }

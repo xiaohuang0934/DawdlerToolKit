@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ToolKit.Commons.BaseResults;
 using ToolKit.Configs.AutoFacs;
 using ToolKit.Services.Test;
 
@@ -15,7 +16,7 @@ namespace ToolKit.Controllers
         [HttpGet]
         public async Task<IActionResult> QueryString()
         {
-            return Ok(await Test.QueryString());
+            return Ok(new BaseResult(await Test.QueryString(), 200, "")); ;
         }
     }
 }
