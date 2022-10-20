@@ -45,6 +45,8 @@ namespace ToolKit
                     Contact = new OpenApiContact { Name = "小新cx330", Email = "18754956388@163.com" }
                 });
             });
+            // 添加Http请求
+            builder.Services.AddHttpClient();
             #endregion
 
             var app = builder.Build();
@@ -65,7 +67,7 @@ namespace ToolKit
             app.MapControllers();
             app.UseRouting();
             app.UseSwagger();
-            
+
             // 启动页
             app.MapGet("/", () => "欢迎使用工具箱！！！");
             // 添加跨域
