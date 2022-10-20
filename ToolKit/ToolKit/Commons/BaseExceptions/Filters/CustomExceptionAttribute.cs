@@ -26,7 +26,6 @@ namespace ToolKit.Commons.BaseExceptions.Filters
                 result = new BaseResult(baseException.Message);
                 context.Result = new ContentResult
                 {
-                    // 返回状态码设置为200，表示成功 TODO状态码改为200
                     StatusCode = StatusCodes.Status500InternalServerError,
                     // 设置返回格式
                     ContentType = "application/json;charset=utf-8",
@@ -38,7 +37,16 @@ namespace ToolKit.Commons.BaseExceptions.Filters
             }
             else
             {
-                // TODO 做一个统一的处理
+                //  做一个统一的处理
+                result = new BaseResult(context.Exception.Message);
+                context.Result = new ContentResult
+                {
+                    StatusCode = StatusCodes.Status500InternalServerError,
+                    // 设置返回格式
+                    ContentType = "application/json;charset=utf-8",
+                    Content = JsonConvert.SerializeObject(result)
+                };
+                context.ExceptionHandled = true;
             }
             return Task.CompletedTask;
         }
