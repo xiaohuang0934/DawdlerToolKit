@@ -3,6 +3,7 @@ using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using ToolKit.Commons.BaseExceptions.Filters;
 using ToolKit.Commons.BaseResults.Filters;
 using ToolKit.Configs.AutoFacs;
@@ -33,6 +34,17 @@ namespace ToolKit
             });
             // 替换控制器规则 ====>> 替换后控制器内才能实现属性注入
             builder.Services.Replace(ServiceDescriptor.Transient<IControllerActivator, ServiceBasedControllerActivator>());
+            // swagger服务
+            builder.Services.AddSwaggerGen(swagger =>
+            {
+                swagger.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1.0",
+                    Title = "DawdlerToolKit",
+                    Description = "懒人工具箱",
+                    Contact = new OpenApiContact { Name = "小新cx330", Email = "18754956388@163.com" }
+                });
+            });
             #endregion
 
             var app = builder.Build();
@@ -42,10 +54,18 @@ namespace ToolKit
             if (app.Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                // swagger配置中间件
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                });
             }
             // 添加了对属性路由的控制器支持
             app.MapControllers();
             app.UseRouting();
+            app.UseSwagger();
+            
             // 启动页
             app.MapGet("/", () => "欢迎使用工具箱！！！");
             // 添加跨域
