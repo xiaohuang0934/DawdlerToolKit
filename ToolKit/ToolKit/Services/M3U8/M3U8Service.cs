@@ -71,13 +71,14 @@ namespace ToolKit.Services.M3U8
                     vdoc.LoadHtml(vhtml);
                     var m3u8 = vdoc.DocumentNode.SelectSingleNode("//video");
                     m3.M3U8Url = m3u8.GetAttributeValue("data-src", "");
+                    m3.M3U8Url = m3.M3U8Url.Replace("amp:","&");
                     if (string.IsNullOrEmpty(m3.M3U8Url))
                     {
                         continue;
                     }
                     Process exe = new Process();
                     exe.StartInfo.FileName = "F:/DawdlerToolKit/ToolKit/ToolKit/N_m3u8DL-CLI_v3.0.2.exe";
-                    exe.StartInfo.Arguments = m3.M3U8Url + " --saveName " + m3.Title + " --workDir F:/pro";
+                    exe.StartInfo.Arguments = m3.M3U8Url + " --saveName " + m3.Title + " --workDir F:/pro --enableDelAfterDone";
                     exe.Start();
                     exe.WaitForExit();
                     result.Add(m3);
