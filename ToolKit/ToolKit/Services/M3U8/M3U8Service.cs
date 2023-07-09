@@ -22,8 +22,9 @@ namespace ToolKit.Services.M3U8
                 await Task.Run(() =>
                 {
                     Process exe = new Process();
-                    exe.StartInfo.FileName = "F:/DawdlerToolKit/ToolKit/ToolKit/N_m3u8DL-CLI_v3.0.2.exe";
-                    exe.StartInfo.Arguments = item.M3U8Url + " --saveName " + item.Title + " --workDir F:/pro --enableDelAfterDone";
+                    var rootDirectory = Environment.CurrentDirectory.ToString();
+                    exe.StartInfo.FileName = rootDirectory+"\\N_m3u8DL-CLI_v3.0.2.exe";
+                    exe.StartInfo.Arguments = item.M3U8Url + " --saveName " + item.Title + " --workDir "+rootDirectory.Substring(0,1)+":/pro --enableDelAfterDone";
                     exe.Start();
                     exe.WaitForExit();
                 });
@@ -71,14 +72,15 @@ namespace ToolKit.Services.M3U8
                     vdoc.LoadHtml(vhtml);
                     var m3u8 = vdoc.DocumentNode.SelectSingleNode("//video");
                     m3.M3U8Url = m3u8.GetAttributeValue("data-src", "");
-                    m3.M3U8Url = m3.M3U8Url.Replace("amp:","&");
+                    m3.M3U8Url = m3.M3U8Url.Replace("amp;","&");
                     if (string.IsNullOrEmpty(m3.M3U8Url))
                     {
                         continue;
                     }
                     Process exe = new Process();
-                    exe.StartInfo.FileName = "F:/DawdlerToolKit/ToolKit/ToolKit/N_m3u8DL-CLI_v3.0.2.exe";
-                    exe.StartInfo.Arguments = m3.M3U8Url + " --saveName " + m3.Title + " --workDir F:/pro --enableDelAfterDone";
+                    var rootDirectory = Environment.CurrentDirectory.ToString();
+                    exe.StartInfo.FileName = rootDirectory+"\\N_m3u8DL-CLI_v3.0.2.exe";
+                    exe.StartInfo.Arguments = m3.M3U8Url + " --saveName " + m3.Title + " --workDir "+rootDirectory.Substring(0,1)+":/pro --enableDelAfterDone";
                     exe.Start();
                     exe.WaitForExit();
                     result.Add(m3);

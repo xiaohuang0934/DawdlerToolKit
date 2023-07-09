@@ -23,7 +23,7 @@ namespace ToolKit.Controllers
             //exe.StartInfo.Arguments = "https://cdn3.jiuse.cloud/hls/716498/index.m3u8?t=1666445704&m=l6N9qfZQCoXcq_K8-bYR_Q --saveName 90后极品空姐，操到高潮浪叫 --workDir F:/pro";
             //exe.Start();
             //exe.WaitForExit();
-            var list = await m3u8.DowM3U8(IM3U8Service.Url + IM3U8Service.DayTop);
+            var list = await m3u8.DowM3U8(IM3U8Service.Url + IM3U8Service.Month);
             //await m3u8.CallExe(list);
             return Ok(new BaseResult("", 200, "请求成功"));
         }
